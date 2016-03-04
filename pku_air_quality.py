@@ -3,11 +3,13 @@
 # PKU air quality
 # main program to run the flow
 
-import get_air_quality, weibo_post
+#import get_air_quality, weibo_post
 import time
 
 def main():
-    weibo_post.authorize()
+    user_password = raw_input("please input user_password: ")
+    print(user_password)
+    weibo_post.authorize(user_password)
     while True:
         air_quality = get_air_quality.get_air_quality()
         print(air_quality)
