@@ -21,7 +21,6 @@ def get_air_quality():
     # <td><font face="Times New Roman" color="Black" size="6">PM2.5[30℃]</font></td><td><font face="Times New Roman" color="Black" size="6">308.1</font></td>
 
     line_PM2_5 = re.search('PM2\.5.*', data.group())
-
     read_PM2_5 = re.search('(?<=>)[\-0-9\.]+',line_PM2_5.group())
 
     #print(read_PM2_5.group())
