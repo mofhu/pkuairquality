@@ -6,7 +6,7 @@
 
 
 def get_air_quality():
-    from urllib2 import urlopen, Request, HTTPError
+    from urllib2 import urlopen
 
     html = urlopen('http://162.105.166.202').read()
 
@@ -32,7 +32,6 @@ def get_air_quality():
     #print(datetime.group())
     # output air quality
     air_quality_string = '#PKUairquailty# ' + datetime.group() + ' PM2.5: ' + read_PM2_5.group() + ' ug/m3'
-    print(air_quality_string)
 
     return air_quality_string
 
