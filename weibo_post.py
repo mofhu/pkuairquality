@@ -8,7 +8,7 @@ from weibo import APIClient
 
 import requests
 
-def authorize():
+def authorize(user_password):
         # http://jas0n.me/2014/12/19/weibo_robot/
     #构造headers信息
     user_agent = (
@@ -24,7 +24,7 @@ def authorize():
     APP_SECRET = '88b3af0c0f8b73560653e6c2e22f5120' #请在微博开放平台获取
     CALLBACK_URL = 'http://frank-the-obscure.me/'
     USERID = 'mofrankhu@gmail.com' #微博登陆邮箱
-    PASSWORD = 'pkuairquality' #微博登陆密码
+    PASSWORD = user_password #微博登陆密码
     global client, referer_url
     client = APIClient(app_key=APP_KEY, app_secret=APP_SECRET, redirect_uri=CALLBACK_URL)
     referer_url = client.get_authorize_url()
@@ -62,7 +62,7 @@ def authorize():
     # https://api.weibo.com/oauth2/authorize?redirect_uri=http%3A//frank-the-obscure.me/&response_type=code&client_id=1512985854
 
     code = '72eaf6914196ebdf3dace23dbe764fb6' # manually got code
-    #client = APIClient(app_key=APP_KEY, app_secret=APP_SECRET, 
+    #client = APIClient(app_key=APP_KEY, app_secret=APP_SECRET,
     #                   redirect_uri=CALLBACK_URL)
     r = client.request_access_token(code)
     access_token = r.access_token # 新浪返回的token，类似abc123xyz456
