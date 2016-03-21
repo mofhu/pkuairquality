@@ -27,7 +27,7 @@ def main(parameters, output_weibo=False, output_ifttt=False):
     import get_air_quality
     air_quality = get_air_quality.get_air_quality()
 
-    log = open('log.txt', 'wa')
+    log = open('log.txt', 'a')
 
     while True:
         # main loop
@@ -38,11 +38,14 @@ def main(parameters, output_weibo=False, output_ifttt=False):
             read=air_quality))
 
         if output_weibo:
+
             return_string = weibo_post.post(air_quality, parameters)
-            pprint(return_string)
-            log.write("{time} {note}\n".format(
-                time=pretty_time(),
-                note=return_string))
+            if return_string is not 1:
+                # handle error
+                pprint(return_string)
+                log.write("{time} {note}\n".format(
+                    time=pretty_time(),
+                    note=return_string))
 
         if output_ifttt:
             ifttt_notification.ios_alert(key='dvGhZv2UPNqyJncn8TAXTk',
@@ -61,6 +64,9 @@ def main(parameters, output_weibo=False, output_ifttt=False):
             print(pretty_time())
             log.write("{time} \n".format(time=pretty_time()))
             air_quality_new = get_air_quality.get_air_quality()
+            if air_quality_new is 1:
+                # handle error
+                continue
             if air_quality_new != air_quality:
                 air_quality = air_quality_new
                 break

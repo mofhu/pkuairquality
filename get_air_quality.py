@@ -7,9 +7,10 @@
 
 def get_air_quality():
     from urllib2 import urlopen
-
-    html = urlopen('http://162.105.166.202').read()
-
+    try:
+        html = urlopen('http://162.105.166.202').read()
+    except urllib2.URLError:
+        return 1
     import re
 
     # get main data frame from html

@@ -1,19 +1,19 @@
 # -*- coding: utf-8 -*-
-# Author: Mo Frank Hu
 # PKU air quality
-# output to weibo using API
+# output to weibo using its API
 
 from weibo import APIClient
 # https://github.com/michaelliao/sinaweibopy
 import requests
+import urllib2
 
 def authorize(user_password, parameters):
     """Get Auth2.0 from weibo.
     """
     # http://jas0n.me/2014/12/19/weibo_robot/
 
-    USERID = 'mofrankhu@gmail.com' #微博登陆邮箱
-    PASSWORD = user_password #微博登陆密码
+    USERID = 'mofrankhu@gmail.com'  #微博登陆邮箱
+    PASSWORD = user_password  #weibo password
 
     client = APIClient(app_key=parameters['APP_KEY'], 
                        app_secret=parameters['APP_SECRET'], 
@@ -43,6 +43,10 @@ def post(post_string, parameters):
         - parameters (app_key, app_secret, redirect_uri, access_token, expires_in)
     o: post at weibo
     """
-    client = APIClient(app_key=parameters['APP_KEY'], app_secret=parameters['APP_SECRET'], redirect_uri=parameters['CALLBACK_URL'])
-    client.set_access_token(parameters['ACCESS_TOKEN'], parameters['EXPIRES_IN'])
-    return(client.statuses.update.post(status=post_string))
+    try:
+        client = APIClient(app_key=parameters['APP_KEY'], app_secret=parameters['APP_SECRET'], redirect_uri=parameters['CALLBACK_URL'])
+        client.set_access_token(parameters['ACCESS_TOKEN'], parameters['EXPIRES_IN'])
+        return(client.statuses.update.post(status=post_string))
+    except urllib2.URLError:
+        return 1
+
